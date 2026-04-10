@@ -428,10 +428,26 @@
     justify-content: center;
     gap: 1rem;
     color: var(--text-dim);
+    background-image: url('https://img.youtube.com/vi/FZNd_kAJi7Q/maxresdefault.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+
+  .video-placeholder::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(13, 17, 23, 0.55);
+    z-index: 0;
+  }
+
+  .video-placeholder > * {
+    position: relative;
+    z-index: 1;
   }
 
   .play-btn {
-    width: 64px; height: 64px;
+    width: 72px; height: 72px;
     border-radius: 50%;
     background: var(--accent);
     display: flex;
@@ -439,12 +455,13 @@
     justify-content: center;
     cursor: pointer;
     transition: all 0.2s;
+    box-shadow: 0 0 30px rgba(74,158,255,0.3);
   }
 
   .play-btn:hover {
     background: var(--accent2);
     transform: scale(1.1);
-    box-shadow: 0 0 30px rgba(74,158,255,0.4);
+    box-shadow: 0 0 40px rgba(74,158,255,0.5);
   }
 
   .play-btn svg { margin-left: 4px; }
@@ -453,7 +470,8 @@
     font-size: 0.8rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--text-muted);
+    color: var(--text);
+    text-shadow: 0 1px 4px rgba(0,0,0,0.5);
   }
 
   /* ── EXPERIENCE TIMELINE ── */
@@ -886,15 +904,13 @@
       <div class="video-frame" id="video-container">
         <div class="video-placeholder" id="video-placeholder">
           <div class="play-btn" onclick="loadVideo()">
-            <svg width="24" height="24" fill="#0d1117" viewBox="0 0 16 16">
+            <svg width="28" height="28" fill="#0d1117" viewBox="0 0 16 16">
               <path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445z"/>
             </svg>
           </div>
           <div class="video-label">Ver presentación</div>
-          <div style="font-size:0.72rem;color:var(--text-muted);margin-top:0.3rem;">Próximamente · Subí tu video a YouTube y reemplazá el link</div>
         </div>
       </div>
-      <p style="font-size:0.75rem;color:var(--text-muted);margin-top:0.8rem;letter-spacing:0.05em;">Para activar: subí el video a YouTube, copiá el ID y reemplazalo en el código.</p>
     </div>
   </div>
 </div>
@@ -1152,17 +1168,18 @@
     toggle.textContent = isOpen ? 'Ver detalle ↓' : 'Ocultar ↑';
   }
 
-// Video loader
-function loadVideo() {
-  const videoId = 'FZNd_kAJi7Q';
-  const container = document.getElementById('video-container');
-  const iframe = document.createElement('iframe');
-  iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-  iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:0;';
-  iframe.allow = 'autoplay; fullscreen';
-  container.innerHTML = '';
-  container.appendChild(iframe);
-}
+  // Video loader — loads YouTube embed on click
+  function loadVideo() {
+    const videoId = 'FZNd_kAJi7Q';
+    const container = document.getElementById('video-container');
+    const iframe = document.createElement('iframe');
+    iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
+    iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:0;';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    iframe.allowFullscreen = true;
+    container.innerHTML = '';
+    container.appendChild(iframe);
+  }
 
   // Nav active on scroll
   const navLinks = document.querySelectorAll('.nav-links a');
@@ -1175,7 +1192,7 @@ function loadVideo() {
     });
     navLinks.forEach(link => {
       link.style.color = '';
-      if (link.getAttribute('href') === `#${current}`) {
+      if (link.getAttribute('href') === '#' + current) {
         link.style.color = 'var(--accent)';
       }
     });
