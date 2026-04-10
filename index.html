@@ -1152,21 +1152,17 @@
     toggle.textContent = isOpen ? 'Ver detalle ↓' : 'Ocultar ↑';
   }
 
-  // Video loader
-  function loadVideo() {
-    const videoId = 'TU_VIDEO_ID';
-    if (videoId === 'TU_VIDEO_ID') {
-      alert('Para activar el video: subí tu presentación a YouTube, copiá el ID del video (los caracteres después de "?v=" en la URL) y reemplazá TU_VIDEO_ID en el código.');
-      return;
-    }
-    const container = document.getElementById('video-container');
-    const iframe = document.createElement('iframe');
-    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-    iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:0;';
-    iframe.allow = 'autoplay; fullscreen';
-    container.innerHTML = '';
-    container.appendChild(iframe);
-  }
+// Video loader
+function loadVideo() {
+  const videoId = 'FZNd_kAJi7Q';
+  const container = document.getElementById('video-container');
+  const iframe = document.createElement('iframe');
+  iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+  iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:0;';
+  iframe.allow = 'autoplay; fullscreen';
+  container.innerHTML = '';
+  container.appendChild(iframe);
+}
 
   // Nav active on scroll
   const navLinks = document.querySelectorAll('.nav-links a');
